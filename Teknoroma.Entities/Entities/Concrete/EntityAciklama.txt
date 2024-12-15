@@ -1,0 +1,23 @@
+﻿Bağlantılar (Navigation Property Açıklamaları)
+Faturalar ve Cariler
+
+Her Fatura bir Cariye bağlıdır.
+Bir Cari birden fazla Fatura oluşturabilir.
+Satışlar ve Personeller
+
+Her Satış bir Personel tarafından yapılır.
+Bir Personel birden fazla Satış gerçekleştirebilir.
+Stoklar ve Depolar
+
+Her Stok bir Depoda tutulur.
+Bir Depoda birden fazla Stok bulunabilir.
+StokHareket ve Depolar
+
+StokHareket ile Depolar arasında çift yönlü bir ilişki vardır: giriş ve çıkış depoları.
+Kullanıcılar ve Personeller
+
+Her Kullanıcı, bir Personel ile ilişkilidir.
+Birimler ve Stoklar
+
+Her Stok, bir Birim ile ilişkilidir.
+Bir Birim birden fazla Stok için kullanılabilir.
