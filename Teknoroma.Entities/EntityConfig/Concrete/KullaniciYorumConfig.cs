@@ -1,29 +1,32 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore;
 using Teknoroma.Entities.Entities.Concrete;
-using Teknoroma.Entities.EntityConfig.Abstract;
 
-namespace Teknoroma.Entities.EntityConfig.Concrete
+namespace Teknoroma.Entities.EntityConfig
 {
     public class KullaniciYorumConfig : BaseConfig<KullaniciYorum>
     {
-        public override void Configure(EntityTypeBuilder<KullaniciYorum> builder)
+        public override void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<KullaniciYorum> builder)
         {
             base.Configure(builder);
 
-            builder.Property(x => x.YorumMetni)
-                .IsRequired()
-                .HasMaxLength(500);
+            builder.ToTable("KullaniciYorumlari");
 
-            builder.Property(x => x.YorumTarihi)
-                .IsRequired();
+            builder.Property(ky => ky.YorumMetni)
+                   .HasMaxLength(500)
+                   .IsRequired(false);
 
-            builder.HasOne(x => x.Kullanici)
-                .WithMany(x => x.Yorumlar)
-                .HasForeignKey(x => x.KullaniciId);
+            builder.Property(ky => ky.YorumTarihi)
+                   .HasColumnType("datetime2");
 
-            builder.HasOne(x => x.Stok)
-                .WithMany(x => x.KullaniciYorumlari)
-                .HasForeignKey(x => x.StokId);
+            builder.HasOne(ky => ky.Kullanici)
+                   .WithMany(a => a.Yorumlar)
+                   .HasForeignKey(ky => ky.KullaniciId)
+                   .OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasOne(ky => ky.Stok)
+                   .WithMany(s => s.KullaniciYorumlari)
+                   .HasForeignKey(ky => ky.StokId)
+                   .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

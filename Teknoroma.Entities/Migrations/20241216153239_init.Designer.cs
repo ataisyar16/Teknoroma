@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Teknoroma.Entities.Contexts;
+using Teknoroma.Entities.DAL.Contexts;
 
 #nullable disable
 
 namespace Teknoroma.Entities.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241215173115_init")]
+    [Migration("20241216153239_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -179,11 +179,13 @@ namespace Teknoroma.Entities.Migrations
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -203,7 +205,6 @@ namespace Teknoroma.Entities.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PersonelId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("PhoneNumber")
@@ -232,7 +233,9 @@ namespace Teknoroma.Entities.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.HasIndex("PersonelId");
+                    b.HasIndex("PersonelId")
+                        .IsUnique()
+                        .HasFilter("[PersonelId] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
@@ -244,13 +247,13 @@ namespace Teknoroma.Entities.Migrations
 
                     b.Property<string>("Aciklama")
                         .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("BirimKodu")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -260,10 +263,7 @@ namespace Teknoroma.Entities.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Id")
-                        .IsUnique();
-
-                    b.ToTable("Birimler");
+                    b.ToTable("Birimler", (string)null);
                 });
 
             modelBuilder.Entity("Teknoroma.Entities.Entities.Concrete.Cari", b =>
@@ -273,44 +273,41 @@ namespace Teknoroma.Entities.Migrations
 
                     b.Property<string>("Adres")
                         .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<decimal>("Bakiye")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("CariHesapNo")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Ilce")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Sehir")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("SubeNo")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<DateTime>("UpdateAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Id")
-                        .IsUnique();
-
-                    b.ToTable("Cariler");
+                    b.ToTable("Cariler", (string)null);
                 });
 
             modelBuilder.Entity("Teknoroma.Entities.Entities.Concrete.Departman", b =>
@@ -323,8 +320,8 @@ namespace Teknoroma.Entities.Migrations
 
                     b.Property<string>("DepartmanAdi")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("UpdateAt")
                         .HasColumnType("datetime2");
@@ -335,12 +332,9 @@ namespace Teknoroma.Entities.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Id")
-                        .IsUnique();
-
                     b.HasIndex("UstId");
 
-                    b.ToTable("Departmanlar");
+                    b.ToTable("Departmanlar", (string)null);
                 });
 
             modelBuilder.Entity("Teknoroma.Entities.Entities.Concrete.Depo", b =>
@@ -350,8 +344,8 @@ namespace Teknoroma.Entities.Migrations
 
                     b.Property<string>("Adres")
                         .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -370,12 +364,9 @@ namespace Teknoroma.Entities.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Id")
-                        .IsUnique();
-
                     b.HasIndex("SubeId");
 
-                    b.ToTable("Depolar");
+                    b.ToTable("Depolar", (string)null);
                 });
 
             modelBuilder.Entity("Teknoroma.Entities.Entities.Concrete.Doviz", b =>
@@ -388,8 +379,8 @@ namespace Teknoroma.Entities.Migrations
 
                     b.Property<string>("DovizAdi")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("DovizKodu")
                         .IsRequired()
@@ -404,10 +395,7 @@ namespace Teknoroma.Entities.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Id")
-                        .IsUnique();
-
-                    b.ToTable("Dovizler");
+                    b.ToTable("Dovizler", (string)null);
                 });
 
             modelBuilder.Entity("Teknoroma.Entities.Entities.Concrete.Fatura", b =>
@@ -438,10 +426,7 @@ namespace Teknoroma.Entities.Migrations
 
                     b.HasIndex("CariId");
 
-                    b.HasIndex("Id")
-                        .IsUnique();
-
-                    b.ToTable("Faturalar");
+                    b.ToTable("Faturalar", (string)null);
                 });
 
             modelBuilder.Entity("Teknoroma.Entities.Entities.Concrete.FaturaDetay", b =>
@@ -459,7 +444,7 @@ namespace Teknoroma.Entities.Migrations
                     b.Property<decimal?>("Fiyat")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("Miktar")
+                    b.Property<int?>("Miktar")
                         .HasColumnType("int");
 
                     b.Property<string>("StokId")
@@ -473,12 +458,9 @@ namespace Teknoroma.Entities.Migrations
 
                     b.HasIndex("FaturaId");
 
-                    b.HasIndex("Id")
-                        .IsUnique();
-
                     b.HasIndex("StokId");
 
-                    b.ToTable("FaturaDetaylar");
+                    b.ToTable("FaturaDetaylari", (string)null);
                 });
 
             modelBuilder.Entity("Teknoroma.Entities.Entities.Concrete.Kasa", b =>
@@ -497,14 +479,12 @@ namespace Teknoroma.Entities.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("KasaKodu")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("SubeKodu")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<DateTime>("UpdateAt")
                         .HasColumnType("datetime2");
@@ -513,10 +493,7 @@ namespace Teknoroma.Entities.Migrations
 
                     b.HasIndex("DovizId");
 
-                    b.HasIndex("Id")
-                        .IsUnique();
-
-                    b.ToTable("Kasalar");
+                    b.ToTable("Kasalar", (string)null);
                 });
 
             modelBuilder.Entity("Teknoroma.Entities.Entities.Concrete.KasaHareket", b =>
@@ -524,8 +501,8 @@ namespace Teknoroma.Entities.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<double?>("Cikis")
-                        .HasColumnType("double");
+                    b.Property<decimal?>("Cikis")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -534,11 +511,10 @@ namespace Teknoroma.Entities.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<double?>("Giris")
-                        .HasColumnType("double");
+                    b.Property<decimal?>("Giris")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("HareketTipi")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -549,8 +525,8 @@ namespace Teknoroma.Entities.Migrations
                     b.Property<DateTime?>("Tarih")
                         .HasColumnType("datetime2");
 
-                    b.Property<double?>("Tutar")
-                        .HasColumnType("double");
+                    b.Property<decimal?>("Tutar")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("UpdateAt")
                         .HasColumnType("datetime2");
@@ -559,12 +535,9 @@ namespace Teknoroma.Entities.Migrations
 
                     b.HasIndex("DovizId");
 
-                    b.HasIndex("Id")
-                        .IsUnique();
-
                     b.HasIndex("KasaId");
 
-                    b.ToTable("KasaHareketler");
+                    b.ToTable("KasaHareketler", (string)null);
                 });
 
             modelBuilder.Entity("Teknoroma.Entities.Entities.Concrete.Kategori", b =>
@@ -576,7 +549,6 @@ namespace Teknoroma.Entities.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("KategoriAdi")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -585,13 +557,7 @@ namespace Teknoroma.Entities.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Id")
-                        .IsUnique();
-
-                    b.HasIndex("KategoriAdi")
-                        .IsUnique();
-
-                    b.ToTable("Kategoriler");
+                    b.ToTable("Kategoriler", (string)null);
                 });
 
             modelBuilder.Entity("Teknoroma.Entities.Entities.Concrete.KullaniciYorum", b =>
@@ -614,7 +580,6 @@ namespace Teknoroma.Entities.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("YorumMetni")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
@@ -623,14 +588,11 @@ namespace Teknoroma.Entities.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Id")
-                        .IsUnique();
-
                     b.HasIndex("KullaniciId");
 
                     b.HasIndex("StokId");
 
-                    b.ToTable("KullaniciYorumlari");
+                    b.ToTable("KullaniciYorumlari", (string)null);
                 });
 
             modelBuilder.Entity("Teknoroma.Entities.Entities.Concrete.Kur", b =>
@@ -639,7 +601,7 @@ namespace Teknoroma.Entities.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<decimal?>("AlisKuru")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -648,14 +610,11 @@ namespace Teknoroma.Entities.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("DovizId1")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("KurTarihi")
+                    b.Property<DateTime?>("KurTarihi")
                         .HasColumnType("datetime2");
 
                     b.Property<decimal?>("SatisKuru")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<DateTime>("UpdateAt")
                         .HasColumnType("datetime2");
@@ -664,9 +623,7 @@ namespace Teknoroma.Entities.Migrations
 
                     b.HasIndex("DovizId");
 
-                    b.HasIndex("DovizId1");
-
-                    b.ToTable("Kurlar");
+                    b.ToTable("Kurlar", (string)null);
                 });
 
             modelBuilder.Entity("Teknoroma.Entities.Entities.Concrete.Personel", b =>
@@ -675,9 +632,8 @@ namespace Teknoroma.Entities.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Ad")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<bool?>("Cinsiyet")
                         .HasColumnType("bit");
@@ -689,24 +645,19 @@ namespace Teknoroma.Entities.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("DepartmanId1")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Gorev")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Soyad")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("SubeId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("TcNo")
-                        .IsRequired()
                         .HasMaxLength(11)
                         .HasColumnType("nvarchar(11)");
 
@@ -717,11 +668,9 @@ namespace Teknoroma.Entities.Migrations
 
                     b.HasIndex("DepartmanId");
 
-                    b.HasIndex("DepartmanId1");
-
                     b.HasIndex("SubeId");
 
-                    b.ToTable("Personeller");
+                    b.ToTable("Personeller", (string)null);
                 });
 
             modelBuilder.Entity("Teknoroma.Entities.Entities.Concrete.Satis", b =>
@@ -733,9 +682,6 @@ namespace Teknoroma.Entities.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("CariId1")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -743,7 +689,7 @@ namespace Teknoroma.Entities.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("SatisTarihi")
+                    b.Property<DateTime?>("SatisTarihi")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("SubeId")
@@ -760,13 +706,11 @@ namespace Teknoroma.Entities.Migrations
 
                     b.HasIndex("CariId");
 
-                    b.HasIndex("CariId1");
-
                     b.HasIndex("PersonelId");
 
                     b.HasIndex("SubeId");
 
-                    b.ToTable("Satislar");
+                    b.ToTable("Satislar", (string)null);
                 });
 
             modelBuilder.Entity("Teknoroma.Entities.Entities.Concrete.SatisDetay", b =>
@@ -800,7 +744,7 @@ namespace Teknoroma.Entities.Migrations
 
                     b.HasIndex("StokId");
 
-                    b.ToTable("SatisDetaylari");
+                    b.ToTable("SatisDetaylari", (string)null);
                 });
 
             modelBuilder.Entity("Teknoroma.Entities.Entities.Concrete.Siparis", b =>
@@ -812,9 +756,6 @@ namespace Teknoroma.Entities.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("CariId1")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -822,7 +763,7 @@ namespace Teknoroma.Entities.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTime>("SiparisTarihi")
+                    b.Property<DateTime?>("SiparisTarihi")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("UpdateAt")
@@ -832,9 +773,7 @@ namespace Teknoroma.Entities.Migrations
 
                     b.HasIndex("CariId");
 
-                    b.HasIndex("CariId1");
-
-                    b.ToTable("Siparisler");
+                    b.ToTable("Siparisler", (string)null);
                 });
 
             modelBuilder.Entity("Teknoroma.Entities.Entities.Concrete.Stok", b =>
@@ -846,9 +785,6 @@ namespace Teknoroma.Entities.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("BirimId1")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -856,25 +792,17 @@ namespace Teknoroma.Entities.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("DepoId1")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<decimal?>("Fiyat")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("KategoriId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("StokAdet")
+                    b.Property<int?>("StokAdet")
                         .HasColumnType("int");
 
                     b.Property<string>("StokAdi")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("StokKodu")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -885,15 +813,9 @@ namespace Teknoroma.Entities.Migrations
 
                     b.HasIndex("BirimId");
 
-                    b.HasIndex("BirimId1");
-
                     b.HasIndex("DepoId");
 
-                    b.HasIndex("DepoId1");
-
-                    b.HasIndex("KategoriId");
-
-                    b.ToTable("Stoklar");
+                    b.ToTable("Stoklar", (string)null);
                 });
 
             modelBuilder.Entity("Teknoroma.Entities.Entities.Concrete.StokBarkod", b =>
@@ -902,7 +824,6 @@ namespace Teknoroma.Entities.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Barkod")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -920,7 +841,7 @@ namespace Teknoroma.Entities.Migrations
 
                     b.HasIndex("StokId");
 
-                    b.ToTable("StokBarkodlar");
+                    b.ToTable("StokBarkodlari", (string)null);
                 });
 
             modelBuilder.Entity("Teknoroma.Entities.Entities.Concrete.StokFotograf", b =>
@@ -932,8 +853,8 @@ namespace Teknoroma.Entities.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FotografYolu")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<string>("StokId")
                         .IsRequired()
@@ -946,7 +867,7 @@ namespace Teknoroma.Entities.Migrations
 
                     b.HasIndex("StokId");
 
-                    b.ToTable("StokFotograflar");
+                    b.ToTable("StokFotograflar", (string)null);
                 });
 
             modelBuilder.Entity("Teknoroma.Entities.Entities.Concrete.StokHareket", b =>
@@ -978,12 +899,9 @@ namespace Teknoroma.Entities.Migrations
 
                     b.HasIndex("DepoId");
 
-                    b.HasIndex("Id")
-                        .IsUnique();
-
                     b.HasIndex("StokId");
 
-                    b.ToTable("StokHareketler");
+                    b.ToTable("StokHareketleri", (string)null);
                 });
 
             modelBuilder.Entity("Teknoroma.Entities.Entities.Concrete.Sube", b =>
@@ -992,8 +910,8 @@ namespace Teknoroma.Entities.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Address")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -1003,12 +921,10 @@ namespace Teknoroma.Entities.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Sehir")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("SubeAdi")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -1017,7 +933,7 @@ namespace Teknoroma.Entities.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Subeler");
+                    b.ToTable("Subeler", (string)null);
                 });
 
             modelBuilder.Entity("Teknoroma.Entities.Entities.Concrete.Tedarikci", b =>
@@ -1026,13 +942,12 @@ namespace Teknoroma.Entities.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Ad")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Adres")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -1050,7 +965,7 @@ namespace Teknoroma.Entities.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tedarikciler");
+                    b.ToTable("Tedarikciler", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -1107,10 +1022,9 @@ namespace Teknoroma.Entities.Migrations
             modelBuilder.Entity("Teknoroma.Entities.Entities.Concrete.AppUser", b =>
                 {
                     b.HasOne("Teknoroma.Entities.Entities.Concrete.Personel", "Personel")
-                        .WithMany()
-                        .HasForeignKey("PersonelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithOne()
+                        .HasForeignKey("Teknoroma.Entities.Entities.Concrete.AppUser", "PersonelId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Personel");
                 });
@@ -1131,7 +1045,7 @@ namespace Teknoroma.Entities.Migrations
                     b.HasOne("Teknoroma.Entities.Entities.Concrete.Sube", "Sube")
                         .WithMany("Depolar")
                         .HasForeignKey("SubeId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Sube");
@@ -1142,7 +1056,7 @@ namespace Teknoroma.Entities.Migrations
                     b.HasOne("Teknoroma.Entities.Entities.Concrete.Cari", "Cari")
                         .WithMany("Faturalar")
                         .HasForeignKey("CariId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Cari");
@@ -1153,13 +1067,13 @@ namespace Teknoroma.Entities.Migrations
                     b.HasOne("Teknoroma.Entities.Entities.Concrete.Fatura", "Fatura")
                         .WithMany("FaturaDetaylari")
                         .HasForeignKey("FaturaId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Teknoroma.Entities.Entities.Concrete.Stok", "Stok")
                         .WithMany("FaturaDetaylari")
                         .HasForeignKey("StokId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Fatura");
@@ -1172,7 +1086,7 @@ namespace Teknoroma.Entities.Migrations
                     b.HasOne("Teknoroma.Entities.Entities.Concrete.Doviz", "Doviz")
                         .WithMany("Kasalar")
                         .HasForeignKey("DovizId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Doviz");
@@ -1183,13 +1097,13 @@ namespace Teknoroma.Entities.Migrations
                     b.HasOne("Teknoroma.Entities.Entities.Concrete.Doviz", "Doviz")
                         .WithMany("KasaHareketleri")
                         .HasForeignKey("DovizId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Teknoroma.Entities.Entities.Concrete.Kasa", "Kasa")
                         .WithMany("KasaHareketleri")
                         .HasForeignKey("KasaId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Doviz");
@@ -1202,13 +1116,13 @@ namespace Teknoroma.Entities.Migrations
                     b.HasOne("Teknoroma.Entities.Entities.Concrete.AppUser", "Kullanici")
                         .WithMany("Yorumlar")
                         .HasForeignKey("KullaniciId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Teknoroma.Entities.Entities.Concrete.Stok", "Stok")
                         .WithMany("KullaniciYorumlari")
                         .HasForeignKey("StokId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Kullanici");
@@ -1219,14 +1133,10 @@ namespace Teknoroma.Entities.Migrations
             modelBuilder.Entity("Teknoroma.Entities.Entities.Concrete.Kur", b =>
                 {
                     b.HasOne("Teknoroma.Entities.Entities.Concrete.Doviz", "Doviz")
-                        .WithMany()
-                        .HasForeignKey("DovizId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Teknoroma.Entities.Entities.Concrete.Doviz", null)
                         .WithMany("Kurlar")
-                        .HasForeignKey("DovizId1");
+                        .HasForeignKey("DovizId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("Doviz");
                 });
@@ -1234,19 +1144,15 @@ namespace Teknoroma.Entities.Migrations
             modelBuilder.Entity("Teknoroma.Entities.Entities.Concrete.Personel", b =>
                 {
                     b.HasOne("Teknoroma.Entities.Entities.Concrete.Departman", "Departman")
-                        .WithMany()
-                        .HasForeignKey("DepartmanId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Teknoroma.Entities.Entities.Concrete.Departman", null)
                         .WithMany("Personeller")
-                        .HasForeignKey("DepartmanId1");
+                        .HasForeignKey("DepartmanId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("Teknoroma.Entities.Entities.Concrete.Sube", "Sube")
                         .WithMany("Personeller")
                         .HasForeignKey("SubeId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Departman");
@@ -1257,25 +1163,21 @@ namespace Teknoroma.Entities.Migrations
             modelBuilder.Entity("Teknoroma.Entities.Entities.Concrete.Satis", b =>
                 {
                     b.HasOne("Teknoroma.Entities.Entities.Concrete.Cari", "Cari")
-                        .WithMany()
-                        .HasForeignKey("CariId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Teknoroma.Entities.Entities.Concrete.Cari", null)
                         .WithMany("Satislar")
-                        .HasForeignKey("CariId1");
+                        .HasForeignKey("CariId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("Teknoroma.Entities.Entities.Concrete.Personel", "Personel")
                         .WithMany("Satislar")
                         .HasForeignKey("PersonelId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Teknoroma.Entities.Entities.Concrete.Sube", "Sube")
                         .WithMany("Satislar")
                         .HasForeignKey("SubeId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Cari");
@@ -1296,7 +1198,7 @@ namespace Teknoroma.Entities.Migrations
                     b.HasOne("Teknoroma.Entities.Entities.Concrete.Stok", "Stok")
                         .WithMany("SatisDetaylari")
                         .HasForeignKey("StokId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Satis");
@@ -1307,14 +1209,10 @@ namespace Teknoroma.Entities.Migrations
             modelBuilder.Entity("Teknoroma.Entities.Entities.Concrete.Siparis", b =>
                 {
                     b.HasOne("Teknoroma.Entities.Entities.Concrete.Cari", "Cari")
-                        .WithMany()
+                        .WithMany("Siparisler")
                         .HasForeignKey("CariId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Teknoroma.Entities.Entities.Concrete.Cari", null)
-                        .WithMany("Siparisler")
-                        .HasForeignKey("CariId1");
 
                     b.Navigation("Cari");
                 });
@@ -1322,28 +1220,22 @@ namespace Teknoroma.Entities.Migrations
             modelBuilder.Entity("Teknoroma.Entities.Entities.Concrete.Stok", b =>
                 {
                     b.HasOne("Teknoroma.Entities.Entities.Concrete.Birim", "Birim")
-                        .WithMany()
-                        .HasForeignKey("BirimId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Teknoroma.Entities.Entities.Concrete.Birim", null)
                         .WithMany("Stoklar")
-                        .HasForeignKey("BirimId1");
+                        .HasForeignKey("BirimId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("Teknoroma.Entities.Entities.Concrete.Depo", "Depo")
-                        .WithMany()
-                        .HasForeignKey("DepoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Teknoroma.Entities.Entities.Concrete.Depo", null)
                         .WithMany("Stoklar")
-                        .HasForeignKey("DepoId1");
+                        .HasForeignKey("DepoId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("Teknoroma.Entities.Entities.Concrete.Kategori", null)
                         .WithMany("Stoklar")
-                        .HasForeignKey("KategoriId");
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("Birim");
 
@@ -1366,7 +1258,7 @@ namespace Teknoroma.Entities.Migrations
                     b.HasOne("Teknoroma.Entities.Entities.Concrete.Stok", "Stok")
                         .WithMany("StokFotograflari")
                         .HasForeignKey("StokId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Stok");
@@ -1377,13 +1269,13 @@ namespace Teknoroma.Entities.Migrations
                     b.HasOne("Teknoroma.Entities.Entities.Concrete.Depo", "Depo")
                         .WithMany("StokHareketleri")
                         .HasForeignKey("DepoId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Teknoroma.Entities.Entities.Concrete.Stok", "Stok")
                         .WithMany("StokHareketleri")
                         .HasForeignKey("StokId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Depo");

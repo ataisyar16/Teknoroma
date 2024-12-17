@@ -1,25 +1,49 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Teknoroma.Entities.Entities.Concrete;
 
-namespace Teknoroma.Entities.EntityConfig.Concrete
+namespace Teknoroma.Entities.EntityConfig
 {
-    public class PersonelConfig : IEntityTypeConfiguration<Personel>
+    public class PersonelConfig : BaseConfig<Personel>
     {
-        public void Configure(EntityTypeBuilder<Personel> builder)
+        public override void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Personel> builder)
         {
-            builder.Property(x => x.Ad).IsRequired().HasMaxLength(100);
-            builder.Property(x => x.Soyad).IsRequired().HasMaxLength(100);
-            builder.Property(x => x.TcNo).IsRequired().HasMaxLength(11);
-            builder.Property(x => x.Gorev).HasMaxLength(100);
+            base.Configure(builder);
 
-            builder.HasOne(x => x.Sube)
-                   .WithMany(x => x.Personeller)
-                   .HasForeignKey(x => x.SubeId);
+            builder.ToTable("Personeller");
 
-            builder.HasOne(x => x.Departman)
-                   .WithMany()
-                   .HasForeignKey(x => x.DepartmanId);
+            builder.Property(p => p.Ad)
+                   .HasMaxLength(50)
+                   .IsRequired(false);
+
+            builder.Property(p => p.Soyad)
+                   .HasMaxLength(50)
+                   .IsRequired(false);
+
+            builder.Property(p => p.TcNo)
+                   .HasMaxLength(11)
+                   .IsRequired(false);
+
+            builder.Property(p => p.Gorev)
+                   .HasMaxLength(50)
+                   .IsRequired(false);
+
+            builder.Property(p => p.Cinsiyet)
+                   .IsRequired(false);
+
+            builder.HasOne(p => p.Sube)
+                   .WithMany(s => s.Personeller)
+                   .HasForeignKey(p => p.SubeId)
+                   .OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasOne(p => p.Departman)
+                   .WithMany(d => d.Personeller)
+                   .HasForeignKey(p => p.DepartmanId)
+                   .OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasMany(p => p.Satislar)
+                   .WithOne(s => s.Personel)
+                   .HasForeignKey(s => s.PersonelId)
+                   .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

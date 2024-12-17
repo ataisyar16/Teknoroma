@@ -1,29 +1,37 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore;
 using Teknoroma.Entities.Entities.Concrete;
-using Teknoroma.Entities.EntityConfig.Abstract;
 
-namespace Teknoroma.Entities.EntityConfig.Concrete
+namespace Teknoroma.Entities.EntityConfig
 {
     public class DepoConfig : BaseConfig<Depo>
     {
-        public override void Configure(EntityTypeBuilder<Depo> builder)
+        public override void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Depo> builder)
         {
             base.Configure(builder);
 
-            builder.Property(x => x.DepoAdi)
-                .IsRequired()
-                .HasMaxLength(100);
+            builder.ToTable("Depolar");
 
-            builder.Property(x => x.Adres)
-                .HasMaxLength(250);
+            builder.Property(d => d.DepoAdi)
+                   .HasMaxLength(100)
+                   .IsRequired();
 
-            builder.HasOne(x => x.Sube)
-                .WithMany(x => x.Depolar)
-                .HasForeignKey(x => x.SubeId);
+            builder.Property(d => d.Adres)
+                   .HasMaxLength(200);
 
-            builder.HasMany(x => x.Stoklar)
-                .WithOne(x => x.Depo)
-                .HasForeignKey(x => x.DepoId);
+            builder.HasOne(d => d.Sube)
+                   .WithMany(s => s.Depolar)
+                   .HasForeignKey(d => d.SubeId)
+                   .OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasMany(d => d.Stoklar)
+                   .WithOne(s => s.Depo)
+                   .HasForeignKey(s => s.DepoId)
+                   .OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasMany(d => d.StokHareketleri)
+                   .WithOne(sh => sh.Depo)
+                   .HasForeignKey(sh => sh.DepoId)
+                   .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

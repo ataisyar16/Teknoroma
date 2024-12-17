@@ -1,21 +1,31 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Teknoroma.Entities.Entities.Concrete;
 
-namespace Teknoroma.Entities.EntityConfig.Concrete
+namespace Teknoroma.Entities.EntityConfig
 {
-    public class KurConfig : IEntityTypeConfiguration<Kur>
+    public class KurConfig : BaseConfig<Kur>
     {
-        public void Configure(EntityTypeBuilder<Kur> builder)
+        public override void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Kur> builder)
         {
-            builder.Property(x => x.DovizId).IsRequired();
-            builder.Property(x => x.KurTarihi).IsRequired();
-            builder.Property(x => x.AlisKuru).HasColumnType("decimal(18,2)");
-            builder.Property(x => x.SatisKuru).HasColumnType("decimal(18,2)");
+            base.Configure(builder);
 
-            builder.HasOne(x => x.Doviz)
-                   .WithMany()
-                   .HasForeignKey(x => x.DovizId);
+            builder.ToTable("Kurlar");
+
+            builder.Property(k => k.KurTarihi)
+                   .HasColumnType("datetime2");
+
+            builder.Property(k => k.AlisKuru)
+                   .HasColumnType("decimal(18,4)")
+                   .IsRequired(false);
+
+            builder.Property(k => k.SatisKuru)
+                   .HasColumnType("decimal(18,4)")
+                   .IsRequired(false);
+
+            builder.HasOne(k => k.Doviz)
+                   .WithMany(d => d.Kurlar)
+                   .HasForeignKey(k => k.DovizId)
+                   .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

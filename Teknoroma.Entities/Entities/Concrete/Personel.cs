@@ -16,6 +16,6 @@ namespace Teknoroma.Entities.Entities.Concrete
         public Sube Sube { get; set; }
         public Departman Departman { get; set; }
 
-        public ICollection<Satis> Satislar { get; set; }
+        public ICollection<Satis> Satislar { get; set; } = new List<Satis>();
     }
 }

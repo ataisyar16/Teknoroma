@@ -1,28 +1,29 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Teknoroma.Entities.Entities.Concrete;
-using Teknoroma.Entities.EntityConfig.Abstract;
 
-namespace Teknoroma.Entities.EntityConfig.Concrete
+namespace Teknoroma.Entities.EntityConfig
 {
     public class DepartmanConfig : BaseConfig<Departman>
     {
-        public override void Configure(EntityTypeBuilder<Departman> builder)
+        public override void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Departman> builder)
         {
             base.Configure(builder);
 
-            builder.Property(x => x.DepartmanAdi)
-                .IsRequired()
-                .HasMaxLength(100);
+            builder.ToTable("Departmanlar");
 
-            builder.HasOne(x => x.UstDepartman)
-                .WithMany()
-                .HasForeignKey(x => x.UstId)
-                .OnDelete(DeleteBehavior.Restrict);
+            builder.Property(d => d.DepartmanAdi)
+                   .HasMaxLength(50)
+                   .IsRequired();
 
-            builder.HasMany(x => x.Personeller)
-                .WithOne(x => x.Departman)
-                .HasForeignKey(x => x.DepartmanId);
+            builder.HasOne(d => d.UstDepartman)
+                   .WithMany()
+                   .HasForeignKey(d => d.UstId)
+                   .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasMany(d => d.Personeller)
+                   .WithOne(p => p.Departman)
+                   .HasForeignKey(p => p.DepartmanId)
+                   .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

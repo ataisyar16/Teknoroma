@@ -1,18 +1,24 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Teknoroma.Entities.Entities.Concrete;
 
-namespace Teknoroma.Entities.EntityConfig.Concrete
+namespace Teknoroma.Entities.EntityConfig
 {
-    public class StokBarkodConfig : IEntityTypeConfiguration<StokBarkod>
+    public class StokBarkodConfig : BaseConfig<StokBarkod>
     {
-        public void Configure(EntityTypeBuilder<StokBarkod> builder)
+        public override void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<StokBarkod> builder)
         {
-            builder.Property(x => x.Barkod).IsRequired().HasMaxLength(50);
+            base.Configure(builder);
 
-            builder.HasOne(x => x.Stok)
-                   .WithMany(x => x.StokBarkodlari)
-                   .HasForeignKey(x => x.StokId);
+            builder.ToTable("StokBarkodlari");
+
+            builder.Property(sb => sb.Barkod)
+                   .HasMaxLength(50)
+                   .IsRequired(false);
+
+            builder.HasOne(sb => sb.Stok)
+                   .WithMany(s => s.StokBarkodlari)
+                   .HasForeignKey(sb => sb.StokId)
+                   .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

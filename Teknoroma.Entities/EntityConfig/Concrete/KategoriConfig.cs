@@ -1,21 +1,24 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore;
 using Teknoroma.Entities.Entities.Concrete;
-using Teknoroma.Entities.EntityConfig.Abstract;
 
-namespace Teknoroma.Entities.EntityConfig.Concrete
+namespace Teknoroma.Entities.EntityConfig
 {
     public class KategoriConfig : BaseConfig<Kategori>
     {
-        public override void Configure(EntityTypeBuilder<Kategori> builder)
+        public override void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Kategori> builder)
         {
             base.Configure(builder);
 
-            builder.Property(x => x.KategoriAdi)
-                .IsRequired()
-                .HasMaxLength(100);
+            builder.ToTable("Kategoriler");
 
-            builder.HasIndex(x => x.KategoriAdi)
-                .IsUnique();
+            builder.Property(k => k.KategoriAdi)
+                   .HasMaxLength(100)
+                   .IsRequired(false);
+
+            builder.HasMany(k => k.Stoklar)
+                   .WithOne()
+                   .HasForeignKey(s => s.Id)
+                   .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

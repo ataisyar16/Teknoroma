@@ -1,39 +1,50 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Teknoroma.Entities.Entities.Concrete;
-using Teknoroma.Entities.EntityConfig.Abstract;
 
-namespace Teknoroma.Entities.EntityConfig.Concrete
+namespace Teknoroma.Entities.EntityConfig
 {
     public class CariConfig : BaseConfig<Cari>
     {
-        public override void Configure(EntityTypeBuilder<Cari> builder)
+        public override void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Cari> builder)
         {
             base.Configure(builder);
 
-            builder.Property(x => x.SubeNo)
-                .IsRequired()
-                .HasMaxLength(50);
+            builder.ToTable("Cariler");
 
-            builder.Property(x => x.CariHesapNo)
-                .IsRequired()
-                .HasMaxLength(50);
+            builder.Property(c => c.SubeNo)
+                   .HasMaxLength(10)
+                   .IsRequired();
 
-            builder.Property(x => x.Sehir)
-                .HasMaxLength(100);
+            builder.Property(c => c.CariHesapNo)
+                   .HasMaxLength(20)
+                   .IsRequired();
 
-            builder.Property(x => x.Ilce)
-                .HasMaxLength(100);
+            builder.Property(c => c.Sehir)
+                   .HasMaxLength(50);
 
-            builder.Property(x => x.Adres)
-                .HasMaxLength(250);
+            builder.Property(c => c.Ilce)
+                   .HasMaxLength(50);
 
-            builder.Property(x => x.Bakiye)
-                .HasColumnType("decimal(18,2)");
+            builder.Property(c => c.Adres)
+                   .HasMaxLength(200);
 
-            builder.HasMany(x => x.Faturalar)
-                .WithOne(x => x.Cari)
-                .HasForeignKey(x => x.CariId);
+            builder.Property(c => c.Bakiye)
+                   .HasColumnType("decimal(18,2)");
+
+            builder.HasMany(c => c.Faturalar)
+                   .WithOne(f => f.Cari)
+                   .HasForeignKey(f => f.CariId)
+                   .OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasMany(c => c.Siparisler)
+                   .WithOne(s => s.Cari)
+                   .HasForeignKey(s => s.CariId)
+                   .OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasMany(c => c.Satislar)
+                   .WithOne(s => s.Cari)
+                   .HasForeignKey(s => s.CariId)
+                   .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

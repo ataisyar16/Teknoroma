@@ -1,28 +1,32 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Teknoroma.Entities.Entities.Concrete;
-using Teknoroma.Entities.EntityConfig.Abstract;
 
-namespace Teknoroma.Entities.EntityConfig.Concrete
+namespace Teknoroma.Entities.EntityConfig
 {
     public class StokHareketConfig : BaseConfig<StokHareket>
     {
-        public override void Configure(EntityTypeBuilder<StokHareket> builder)
+        public override void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<StokHareket> builder)
         {
             base.Configure(builder);
 
+            builder.ToTable("StokHareketleri");
 
+            builder.Property(sh => sh.Adet)
+                   .IsRequired();
 
-            builder.HasOne(x => x.Stok)
-                .WithMany(x => x.StokHareketleri)
-                .HasForeignKey(x => x.StokId);
+            builder.Property(sh => sh.Tarih)
+                   .HasColumnType("datetime2")
+                   .IsRequired();
 
-            builder.HasOne(x => x.Depo)
-                .WithMany(x => x.StokHareketleri)
-                .HasForeignKey(x => x.DepoId)
-                .OnDelete(DeleteBehavior.Cascade);
+            builder.HasOne(sh => sh.Stok)
+                   .WithMany(s => s.StokHareketleri)
+                   .HasForeignKey(sh => sh.StokId)
+                   .OnDelete(DeleteBehavior.NoAction);
 
-
+            builder.HasOne(sh => sh.Depo)
+                   .WithMany(d => d.StokHareketleri)
+                   .HasForeignKey(sh => sh.DepoId)
+                   .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

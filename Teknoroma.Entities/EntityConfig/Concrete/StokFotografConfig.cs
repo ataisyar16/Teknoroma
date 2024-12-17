@@ -1,18 +1,24 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Teknoroma.Entities.Entities.Concrete;
 
-namespace Teknoroma.Entities.EntityConfig.Concrete
+namespace Teknoroma.Entities.EntityConfig
 {
-    public class StokFotografConfig : IEntityTypeConfiguration<StokFotograf>
+    public class StokFotografConfig : BaseConfig<StokFotograf>
     {
-        public void Configure(EntityTypeBuilder<StokFotograf> builder)
+        public override void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<StokFotograf> builder)
         {
-            builder.Property(x => x.FotografYolu).IsRequired();
+            base.Configure(builder);
 
-            builder.HasOne(x => x.Stok)
-                   .WithMany(x => x.StokFotograflari)
-                   .HasForeignKey(x => x.StokId);
+            builder.ToTable("StokFotograflar");
+
+            builder.Property(sf => sf.FotografYolu)
+                   .HasMaxLength(250)
+                   .IsRequired(false);
+
+            builder.HasOne(sf => sf.Stok)
+                   .WithMany(s => s.StokFotograflari)
+                   .HasForeignKey(sf => sf.StokId)
+                   .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

@@ -1,23 +1,32 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Teknoroma.Entities.Entities.Concrete;
 
-namespace Teknoroma.Entities.EntityConfig.Concrete
+namespace Teknoroma.Entities.EntityConfig
 {
-    public class SatisDetayConfig : IEntityTypeConfiguration<SatisDetay>
+    public class SatisDetayConfig : BaseConfig<SatisDetay>
     {
-        public void Configure(EntityTypeBuilder<SatisDetay> builder)
+        public override void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<SatisDetay> builder)
         {
-            builder.Property(x => x.Miktar).IsRequired();
-            builder.Property(x => x.BirimFiyat).HasColumnType("decimal(18,2)");
+            base.Configure(builder);
 
-            builder.HasOne(x => x.Satis)
-                   .WithMany(x => x.SatisDetaylari)
-                   .HasForeignKey(x => x.SatisId);
+            builder.ToTable("SatisDetaylari");
 
-            builder.HasOne(x => x.Stok)
-                   .WithMany(x => x.SatisDetaylari)
-                   .HasForeignKey(x => x.StokId);
+            builder.Property(sd => sd.Miktar)
+                   .IsRequired();
+
+            builder.Property(sd => sd.BirimFiyat)
+                   .HasColumnType("decimal(18,2)")
+                   .IsRequired();
+
+            builder.HasOne(sd => sd.Satis)
+                   .WithMany(s => s.SatisDetaylari)
+                   .HasForeignKey(sd => sd.SatisId)
+                   .OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasOne(sd => sd.Stok)
+                   .WithMany(s => s.SatisDetaylari)
+                   .HasForeignKey(sd => sd.StokId)
+                   .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

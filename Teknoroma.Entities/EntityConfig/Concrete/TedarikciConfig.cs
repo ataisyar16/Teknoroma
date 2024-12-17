@@ -1,17 +1,31 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Teknoroma.Entities.Entities.Concrete;
 
-namespace Teknoroma.Entities.EntityConfig.Concrete
+namespace Teknoroma.Entities.EntityConfig
 {
-    public class TedarikciConfig : IEntityTypeConfiguration<Tedarikci>
+    public class TedarikciConfig : BaseConfig<Tedarikci>
     {
-        public void Configure(EntityTypeBuilder<Tedarikci> builder)
+        public override void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Tedarikci> builder)
         {
-            builder.Property(x => x.Ad).IsRequired().HasMaxLength(100);
-            builder.Property(x => x.Telefon).HasMaxLength(15);
-            builder.Property(x => x.Email).HasMaxLength(100);
-            builder.Property(x => x.Adres).HasMaxLength(200);
+            base.Configure(builder);
+
+            builder.ToTable("Tedarikciler");
+
+            builder.Property(t => t.Ad)
+                   .HasMaxLength(100)
+                   .IsRequired(false);
+
+            builder.Property(t => t.Telefon)
+                   .HasMaxLength(15)
+                   .IsRequired(false);
+
+            builder.Property(t => t.Email)
+                   .HasMaxLength(100)
+                   .IsRequired(false);
+
+            builder.Property(t => t.Adres)
+                   .HasMaxLength(250)
+                   .IsRequired(false);
         }
     }
 }

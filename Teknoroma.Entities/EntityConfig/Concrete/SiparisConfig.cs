@@ -1,19 +1,28 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Teknoroma.Entities.Entities.Concrete;
 
-namespace Teknoroma.Entities.EntityConfig.Concrete
+namespace Teknoroma.Entities.EntityConfig
 {
-    public class SiparisConfig : IEntityTypeConfiguration<Siparis>
+    public class SiparisConfig : BaseConfig<Siparis>
     {
-        public void Configure(EntityTypeBuilder<Siparis> builder)
+        public override void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Siparis> builder)
         {
-            builder.Property(x => x.SiparisTarihi).IsRequired();
-            builder.Property(x => x.Durum).HasMaxLength(50);
+            base.Configure(builder);
 
-            builder.HasOne(x => x.Cari)
-                   .WithMany()
-                   .HasForeignKey(x => x.CariId);
+            builder.ToTable("Siparisler");
+
+            builder.Property(s => s.SiparisTarihi)
+                   .HasColumnType("datetime2")
+                   .IsRequired(false);
+
+            builder.Property(s => s.Durum)
+                   .HasMaxLength(50)
+                   .IsRequired(false);
+
+            builder.HasOne(s => s.Cari)
+                   .WithMany(c => c.Siparisler)
+                   .HasForeignKey(s => s.CariId)
+                   .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

@@ -1,27 +1,42 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Teknoroma.Entities.Entities.Concrete;
 
-namespace Teknoroma.Entities.EntityConfig.Concrete
+namespace Teknoroma.Entities.EntityConfig
 {
-    public class SatisConfig : IEntityTypeConfiguration<Satis>
+    public class SatisConfig : BaseConfig<Satis>
     {
-        public void Configure(EntityTypeBuilder<Satis> builder)
+        public override void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Satis> builder)
         {
-            builder.Property(x => x.SatisTarihi).IsRequired();
-            builder.Property(x => x.ToplamTutar).HasColumnType("decimal(18,2)");
+            base.Configure(builder);
 
-            builder.HasOne(x => x.Cari)
-                   .WithMany()
-                   .HasForeignKey(x => x.CariId);
+            builder.ToTable("Satislar");
 
-            builder.HasOne(x => x.Personel)
-                   .WithMany(x => x.Satislar)
-                   .HasForeignKey(x => x.PersonelId);
+            builder.Property(s => s.SatisTarihi)
+                   .HasColumnType("datetime2");
 
-            builder.HasOne(x => x.Sube)
-                   .WithMany(x => x.Satislar)
-                   .HasForeignKey(x => x.SubeId);
+            builder.Property(s => s.ToplamTutar)
+                   .HasColumnType("decimal(18,2)")
+                   .IsRequired();
+
+            builder.HasOne(s => s.Cari)
+                   .WithMany(c => c.Satislar)
+                   .HasForeignKey(s => s.CariId)
+                   .OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasOne(s => s.Personel)
+                   .WithMany(p => p.Satislar)
+                   .HasForeignKey(s => s.PersonelId)
+                   .OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasOne(s => s.Sube)
+                   .WithMany(sb => sb.Satislar)
+                   .HasForeignKey(s => s.SubeId)
+                   .OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasMany(s => s.SatisDetaylari)
+                   .WithOne(sd => sd.Satis)
+                   .HasForeignKey(sd => sd.SatisId)
+                   .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

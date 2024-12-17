@@ -1,25 +1,47 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Teknoroma.Entities.Entities.Concrete;
 
-namespace Teknoroma.Entities.EntityConfig.Concrete
+namespace Teknoroma.Entities.EntityConfig
 {
-    public class StokConfig : IEntityTypeConfiguration<Stok>
+    public class StokConfig : BaseConfig<Stok>
     {
-        public void Configure(EntityTypeBuilder<Stok> builder)
+        public override void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Stok> builder)
         {
-            builder.Property(x => x.StokAdi).IsRequired().HasMaxLength(100);
-            builder.Property(x => x.StokKodu).IsRequired().HasMaxLength(50);
-            builder.Property(x => x.StokAdet).IsRequired();
-            builder.Property(x => x.Fiyat).HasColumnType("decimal(18,2)");
+            base.Configure(builder);
 
-            builder.HasOne(x => x.Depo)
-                   .WithMany()
-                   .HasForeignKey(x => x.DepoId);
+            builder.ToTable("Stoklar");
 
-            builder.HasOne(x => x.Birim)
-                   .WithMany()
-                   .HasForeignKey(x => x.BirimId);
+            builder.Property(s => s.StokAdi)
+                   .HasMaxLength(100)
+                   .IsRequired(false);
+
+            builder.Property(s => s.StokKodu)
+                   .HasMaxLength(50)
+                   .IsRequired(false);
+
+            builder.Property(s => s.Fiyat)
+                   .HasColumnType("decimal(18,2)")
+                   .IsRequired(false);
+
+            builder.HasOne(s => s.Depo)
+                   .WithMany(d => d.Stoklar)
+                   .HasForeignKey(s => s.DepoId)
+                   .OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasOne(s => s.Birim)
+                   .WithMany(b => b.Stoklar)
+                   .HasForeignKey(s => s.BirimId)
+                   .OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasMany(s => s.SatisDetaylari)
+                   .WithOne(sd => sd.Stok)
+                   .HasForeignKey(sd => sd.StokId)
+                   .OnDelete(DeleteBehavior.NoAction);
+
+            builder.HasMany(s => s.FaturaDetaylari)
+                   .WithOne(fd => fd.Stok)
+                   .HasForeignKey(fd => fd.StokId)
+                   .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

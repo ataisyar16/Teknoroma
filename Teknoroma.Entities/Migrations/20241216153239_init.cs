@@ -30,8 +30,8 @@ namespace Teknoroma.Entities.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    BirimKodu = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Aciklama = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
+                    BirimKodu = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    Aciklama = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -45,11 +45,11 @@ namespace Teknoroma.Entities.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    SubeNo = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CariHesapNo = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Sehir = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Ilce = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Adres = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
+                    SubeNo = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    CariHesapNo = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    Sehir = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Ilce = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Adres = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Bakiye = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateAt = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -64,7 +64,7 @@ namespace Teknoroma.Entities.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    DepartmanAdi = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    DepartmanAdi = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     UstId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateAt = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -86,7 +86,7 @@ namespace Teknoroma.Entities.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     DovizKodu = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    DovizAdi = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    DovizAdi = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Kur = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateAt = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -101,7 +101,7 @@ namespace Teknoroma.Entities.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    KategoriAdi = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    KategoriAdi = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -115,10 +115,10 @@ namespace Teknoroma.Entities.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    SubeAdi = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Sehir = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    SubeAdi = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Sehir = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Ilce = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    Address = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -132,10 +132,10 @@ namespace Teknoroma.Entities.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Ad = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Ad = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     Telefon = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    Adres = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    Adres = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -184,8 +184,7 @@ namespace Teknoroma.Entities.Migrations
                         name: "FK_Faturalar_Cariler_CariId",
                         column: x => x.CariId,
                         principalTable: "Cariler",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -194,9 +193,8 @@ namespace Teknoroma.Entities.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CariId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    SiparisTarihi = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    SiparisTarihi = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Durum = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    CariId1 = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -209,11 +207,6 @@ namespace Teknoroma.Entities.Migrations
                         principalTable: "Cariler",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Siparisler_Cariler_CariId1",
-                        column: x => x.CariId1,
-                        principalTable: "Cariler",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -221,8 +214,8 @@ namespace Teknoroma.Entities.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    KasaKodu = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    SubeKodu = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    KasaKodu = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
+                    SubeKodu = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
                     DovizId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Bakiye = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -235,8 +228,7 @@ namespace Teknoroma.Entities.Migrations
                         name: "FK_Kasalar_Dovizler_DovizId",
                         column: x => x.DovizId,
                         principalTable: "Dovizler",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -245,10 +237,9 @@ namespace Teknoroma.Entities.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     DovizId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    KurTarihi = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AlisKuru = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    SatisKuru = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    DovizId1 = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    KurTarihi = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    AlisKuru = table.Column<decimal>(type: "decimal(18,4)", nullable: true),
+                    SatisKuru = table.Column<decimal>(type: "decimal(18,4)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -258,12 +249,6 @@ namespace Teknoroma.Entities.Migrations
                     table.ForeignKey(
                         name: "FK_Kurlar_Dovizler_DovizId",
                         column: x => x.DovizId,
-                        principalTable: "Dovizler",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Kurlar_Dovizler_DovizId1",
-                        column: x => x.DovizId1,
                         principalTable: "Dovizler",
                         principalColumn: "Id");
                 });
@@ -275,7 +260,7 @@ namespace Teknoroma.Entities.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     DepoAdi = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     SubeId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Adres = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
+                    Adres = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -286,8 +271,7 @@ namespace Teknoroma.Entities.Migrations
                         name: "FK_Depolar_Subeler_SubeId",
                         column: x => x.SubeId,
                         principalTable: "Subeler",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -296,13 +280,12 @@ namespace Teknoroma.Entities.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     SubeId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Ad = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Soyad = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    TcNo = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
+                    Ad = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Soyad = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    TcNo = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: true),
                     DepartmanId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Cinsiyet = table.Column<bool>(type: "bit", nullable: true),
-                    Gorev = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    DepartmanId1 = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Gorev = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -313,19 +296,12 @@ namespace Teknoroma.Entities.Migrations
                         name: "FK_Personeller_Departmanlar_DepartmanId",
                         column: x => x.DepartmanId,
                         principalTable: "Departmanlar",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Personeller_Departmanlar_DepartmanId1",
-                        column: x => x.DepartmanId1,
-                        principalTable: "Departmanlar",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Personeller_Subeler_SubeId",
                         column: x => x.SubeId,
                         principalTable: "Subeler",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -335,10 +311,10 @@ namespace Teknoroma.Entities.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     KasaId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     DovizId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    HareketTipi = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Giris = table.Column<double>(type: "double", nullable: true),
-                    Cikis = table.Column<double>(type: "double", nullable: true),
-                    Tutar = table.Column<double>(type: "double", nullable: true),
+                    HareketTipi = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Giris = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    Cikis = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    Tutar = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     Tarih = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateAt = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -350,14 +326,12 @@ namespace Teknoroma.Entities.Migrations
                         name: "FK_KasaHareketler_Dovizler_DovizId",
                         column: x => x.DovizId,
                         principalTable: "Dovizler",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_KasaHareketler_Kasalar_KasaId",
                         column: x => x.KasaId,
                         principalTable: "Kasalar",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -365,15 +339,12 @@ namespace Teknoroma.Entities.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    StokAdi = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    StokKodu = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    StokAdi = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    StokKodu = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     DepoId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    StokAdet = table.Column<int>(type: "int", nullable: false),
+                    StokAdet = table.Column<int>(type: "int", nullable: true),
                     BirimId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Fiyat = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    BirimId1 = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    DepoId1 = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    KategoriId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -384,27 +355,15 @@ namespace Teknoroma.Entities.Migrations
                         name: "FK_Stoklar_Birimler_BirimId",
                         column: x => x.BirimId,
                         principalTable: "Birimler",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Stoklar_Birimler_BirimId1",
-                        column: x => x.BirimId1,
-                        principalTable: "Birimler",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Stoklar_Depolar_DepoId",
                         column: x => x.DepoId,
                         principalTable: "Depolar",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Stoklar_Depolar_DepoId1",
-                        column: x => x.DepoId1,
-                        principalTable: "Depolar",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Stoklar_Kategoriler_KategoriId",
-                        column: x => x.KategoriId,
+                        name: "FK_Stoklar_Kategoriler_Id",
+                        column: x => x.Id,
                         principalTable: "Kategoriler",
                         principalColumn: "Id");
                 });
@@ -414,9 +373,9 @@ namespace Teknoroma.Entities.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PersonelId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    PersonelId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -440,7 +399,7 @@ namespace Teknoroma.Entities.Migrations
                         column: x => x.PersonelId,
                         principalTable: "Personeller",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -451,9 +410,8 @@ namespace Teknoroma.Entities.Migrations
                     CariId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     PersonelId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     SubeId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    SatisTarihi = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    SatisTarihi = table.Column<DateTime>(type: "datetime2", nullable: true),
                     ToplamTutar = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    CariId1 = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -464,71 +422,61 @@ namespace Teknoroma.Entities.Migrations
                         name: "FK_Satislar_Cariler_CariId",
                         column: x => x.CariId,
                         principalTable: "Cariler",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Satislar_Cariler_CariId1",
-                        column: x => x.CariId1,
-                        principalTable: "Cariler",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Satislar_Personeller_PersonelId",
                         column: x => x.PersonelId,
                         principalTable: "Personeller",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Satislar_Subeler_SubeId",
                         column: x => x.SubeId,
                         principalTable: "Subeler",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "FaturaDetaylar",
+                name: "FaturaDetaylari",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     FaturaId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     StokId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Miktar = table.Column<int>(type: "int", nullable: false),
+                    Miktar = table.Column<int>(type: "int", nullable: true),
                     Fiyat = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FaturaDetaylar", x => x.Id);
+                    table.PrimaryKey("PK_FaturaDetaylari", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_FaturaDetaylar_Faturalar_FaturaId",
+                        name: "FK_FaturaDetaylari_Faturalar_FaturaId",
                         column: x => x.FaturaId,
                         principalTable: "Faturalar",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_FaturaDetaylar_Stoklar_StokId",
+                        name: "FK_FaturaDetaylari_Stoklar_StokId",
                         column: x => x.StokId,
                         principalTable: "Stoklar",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "StokBarkodlar",
+                name: "StokBarkodlari",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     StokId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Barkod = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Barkod = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StokBarkodlar", x => x.Id);
+                    table.PrimaryKey("PK_StokBarkodlari", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_StokBarkodlar_Stoklar_StokId",
+                        name: "FK_StokBarkodlari_Stoklar_StokId",
                         column: x => x.StokId,
                         principalTable: "Stoklar",
                         principalColumn: "Id",
@@ -541,7 +489,7 @@ namespace Teknoroma.Entities.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     StokId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    FotografYolu = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FotografYolu = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -552,12 +500,11 @@ namespace Teknoroma.Entities.Migrations
                         name: "FK_StokFotograflar_Stoklar_StokId",
                         column: x => x.StokId,
                         principalTable: "Stoklar",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "StokHareketler",
+                name: "StokHareketleri",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -570,19 +517,17 @@ namespace Teknoroma.Entities.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StokHareketler", x => x.Id);
+                    table.PrimaryKey("PK_StokHareketleri", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_StokHareketler_Depolar_DepoId",
+                        name: "FK_StokHareketleri_Depolar_DepoId",
                         column: x => x.DepoId,
                         principalTable: "Depolar",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_StokHareketler_Stoklar_StokId",
+                        name: "FK_StokHareketleri_Stoklar_StokId",
                         column: x => x.StokId,
                         principalTable: "Stoklar",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -677,7 +622,7 @@ namespace Teknoroma.Entities.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     KullaniciId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     StokId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    YorumMetni = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    YorumMetni = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     YorumTarihi = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateAt = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -689,14 +634,12 @@ namespace Teknoroma.Entities.Migrations
                         name: "FK_KullaniciYorumlari_AspNetUsers_KullaniciId",
                         column: x => x.KullaniciId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_KullaniciYorumlari_Stoklar_StokId",
                         column: x => x.StokId,
                         principalTable: "Stoklar",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -724,8 +667,7 @@ namespace Teknoroma.Entities.Migrations
                         name: "FK_SatisDetaylari_Stoklar_StokId",
                         column: x => x.StokId,
                         principalTable: "Stoklar",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -763,7 +705,9 @@ namespace Teknoroma.Entities.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_PersonelId",
                 table: "AspNetUsers",
-                column: "PersonelId");
+                column: "PersonelId",
+                unique: true,
+                filter: "[PersonelId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
@@ -773,33 +717,9 @@ namespace Teknoroma.Entities.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Birimler_Id",
-                table: "Birimler",
-                column: "Id",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Cariler_Id",
-                table: "Cariler",
-                column: "Id",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Departmanlar_Id",
-                table: "Departmanlar",
-                column: "Id",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Departmanlar_UstId",
                 table: "Departmanlar",
                 column: "UstId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Depolar_Id",
-                table: "Depolar",
-                column: "Id",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Depolar_SubeId",
@@ -807,25 +727,13 @@ namespace Teknoroma.Entities.Migrations
                 column: "SubeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Dovizler_Id",
-                table: "Dovizler",
-                column: "Id",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_FaturaDetaylar_FaturaId",
-                table: "FaturaDetaylar",
+                name: "IX_FaturaDetaylari_FaturaId",
+                table: "FaturaDetaylari",
                 column: "FaturaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FaturaDetaylar_Id",
-                table: "FaturaDetaylar",
-                column: "Id",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_FaturaDetaylar_StokId",
-                table: "FaturaDetaylar",
+                name: "IX_FaturaDetaylari_StokId",
+                table: "FaturaDetaylari",
                 column: "StokId");
 
             migrationBuilder.CreateIndex(
@@ -834,21 +742,9 @@ namespace Teknoroma.Entities.Migrations
                 column: "CariId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Faturalar_Id",
-                table: "Faturalar",
-                column: "Id",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_KasaHareketler_DovizId",
                 table: "KasaHareketler",
                 column: "DovizId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_KasaHareketler_Id",
-                table: "KasaHareketler",
-                column: "Id",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_KasaHareketler_KasaId",
@@ -859,30 +755,6 @@ namespace Teknoroma.Entities.Migrations
                 name: "IX_Kasalar_DovizId",
                 table: "Kasalar",
                 column: "DovizId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Kasalar_Id",
-                table: "Kasalar",
-                column: "Id",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Kategoriler_Id",
-                table: "Kategoriler",
-                column: "Id",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Kategoriler_KategoriAdi",
-                table: "Kategoriler",
-                column: "KategoriAdi",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_KullaniciYorumlari_Id",
-                table: "KullaniciYorumlari",
-                column: "Id",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_KullaniciYorumlari_KullaniciId",
@@ -900,19 +772,9 @@ namespace Teknoroma.Entities.Migrations
                 column: "DovizId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Kurlar_DovizId1",
-                table: "Kurlar",
-                column: "DovizId1");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Personeller_DepartmanId",
                 table: "Personeller",
                 column: "DepartmanId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Personeller_DepartmanId1",
-                table: "Personeller",
-                column: "DepartmanId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Personeller_SubeId",
@@ -935,11 +797,6 @@ namespace Teknoroma.Entities.Migrations
                 column: "CariId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Satislar_CariId1",
-                table: "Satislar",
-                column: "CariId1");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Satislar_PersonelId",
                 table: "Satislar",
                 column: "PersonelId");
@@ -955,13 +812,8 @@ namespace Teknoroma.Entities.Migrations
                 column: "CariId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Siparisler_CariId1",
-                table: "Siparisler",
-                column: "CariId1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_StokBarkodlar_StokId",
-                table: "StokBarkodlar",
+                name: "IX_StokBarkodlari_StokId",
+                table: "StokBarkodlari",
                 column: "StokId");
 
             migrationBuilder.CreateIndex(
@@ -970,19 +822,13 @@ namespace Teknoroma.Entities.Migrations
                 column: "StokId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StokHareketler_DepoId",
-                table: "StokHareketler",
+                name: "IX_StokHareketleri_DepoId",
+                table: "StokHareketleri",
                 column: "DepoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StokHareketler_Id",
-                table: "StokHareketler",
-                column: "Id",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_StokHareketler_StokId",
-                table: "StokHareketler",
+                name: "IX_StokHareketleri_StokId",
+                table: "StokHareketleri",
                 column: "StokId");
 
             migrationBuilder.CreateIndex(
@@ -991,24 +837,9 @@ namespace Teknoroma.Entities.Migrations
                 column: "BirimId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Stoklar_BirimId1",
-                table: "Stoklar",
-                column: "BirimId1");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Stoklar_DepoId",
                 table: "Stoklar",
                 column: "DepoId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Stoklar_DepoId1",
-                table: "Stoklar",
-                column: "DepoId1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Stoklar_KategoriId",
-                table: "Stoklar",
-                column: "KategoriId");
         }
 
         /// <inheritdoc />
@@ -1030,7 +861,7 @@ namespace Teknoroma.Entities.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "FaturaDetaylar");
+                name: "FaturaDetaylari");
 
             migrationBuilder.DropTable(
                 name: "KasaHareketler");
@@ -1048,13 +879,13 @@ namespace Teknoroma.Entities.Migrations
                 name: "Siparisler");
 
             migrationBuilder.DropTable(
-                name: "StokBarkodlar");
+                name: "StokBarkodlari");
 
             migrationBuilder.DropTable(
                 name: "StokFotograflar");
 
             migrationBuilder.DropTable(
-                name: "StokHareketler");
+                name: "StokHareketleri");
 
             migrationBuilder.DropTable(
                 name: "Tedarikciler");

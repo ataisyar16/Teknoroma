@@ -1,24 +1,27 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore;
 using Teknoroma.Entities.Entities.Concrete;
-using Teknoroma.Entities.EntityConfig.Abstract;
 
-namespace Teknoroma.Entities.EntityConfig.Concrete
+namespace Teknoroma.Entities.EntityConfig
 {
     public class BirimConfig : BaseConfig<Birim>
     {
-        public override void Configure(EntityTypeBuilder<Birim> builder)
+        public override void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Birim> builder)
         {
             base.Configure(builder);
 
-            builder.Property(x => x.BirimKodu)
-                .HasMaxLength(50);
+            builder.ToTable("Birimler");
 
-            builder.Property(x => x.Aciklama)
-                .HasMaxLength(250);
+            builder.Property(b => b.BirimKodu)
+                   .HasMaxLength(10)
+                   .IsRequired();
 
-            builder.HasMany(x => x.Stoklar)
-                .WithOne(x => x.Birim)
-                .HasForeignKey(x => x.BirimId);
+            builder.Property(b => b.Aciklama)
+                   .HasMaxLength(100);
+
+            builder.HasMany(b => b.Stoklar)
+                   .WithOne(s => s.Birim)
+                   .HasForeignKey(s => s.BirimId)
+                   .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

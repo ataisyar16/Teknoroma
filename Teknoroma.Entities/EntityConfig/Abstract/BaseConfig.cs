@@ -2,24 +2,25 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Teknoroma.Entities.Entities.Abstract;
 
-namespace Teknoroma.Entities.EntityConfig.Abstract
+namespace Teknoroma.Entities.EntityConfig
 {
-    public abstract class BaseConfig<T> : IEntityTypeConfiguration<T> where T : BaseEntity
+    public abstract class BaseConfig<TEntity> : IEntityTypeConfiguration<TEntity> where TEntity : BaseEntity
     {
-        public virtual void Configure(EntityTypeBuilder<T> builder)
+        public virtual void Configure(EntityTypeBuilder<TEntity> builder)
         {
             // Primary Key
-            builder.HasKey(x => x.Id);
+            builder.HasKey(e => e.Id);
 
             // Common Properties
-            builder.Property(x => x.CreatedAt)
-                .IsRequired();
+            builder.Property(e => e.CreatedAt)
+                   .HasColumnType("datetime2")
+                   .IsRequired();
 
-            builder.Property(x => x.UpdateAt)
-                .IsRequired();
+            builder.Property(e => e.UpdateAt)
+                   .HasColumnType("datetime2")
+                   .IsRequired();
 
-            // Index for Id
-            builder.HasIndex(x => x.Id).IsUnique();
+            // Additional configuration to be overridden by derived classes
         }
     }
 }

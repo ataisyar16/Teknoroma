@@ -7,13 +7,13 @@ namespace Teknoroma.Entities.Entities.Concrete
         public string KasaId { get; set; }
         public string DovizId { get; set; }
         public string? HareketTipi { get; set; }
-        public double? Giris { get; set; }
-        public double? Cikis { get; set; }
-        public double? Tutar { get; set; }
+        public decimal? Giris { get; set; }
+        public decimal? Cikis { get; set; }
+        public decimal? Tutar { get; set; }
         public DateTime? Tarih { get; set; }
 
         // Navigation Properties
-        public Kasa Kasa { get; set; }
-        public Doviz Doviz { get; set; }
+        public virtual Kasa Kasa { get; set; }
+        public virtual Doviz Doviz { get; set; }
     }
 }

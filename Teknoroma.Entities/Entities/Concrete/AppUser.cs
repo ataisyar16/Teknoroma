@@ -11,5 +11,6 @@ namespace Teknoroma.Entities.Entities.Concrete
         // Navigation Property
         public Personel Personel { get; set; }
         public ICollection<KullaniciYorum> Yorumlar { get; set; } = new List<KullaniciYorum>();
+
     }
 }
